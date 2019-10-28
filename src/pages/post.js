@@ -44,8 +44,7 @@ function Post() {
       <ul id="list-post"></ul>
     </div>
   </section>
-  `; 
-  location.hash = 'post';
+  ` 
   loadPost();
   return template;
 }
@@ -53,31 +52,20 @@ function Post() {
 function loadPost() {
   const email = firebase.auth().currentUser.email;
   const codUid = firebase.auth().getUid(email);
-  firebase.firestore().collection('Posts').where("user", "==", codUid).orderBy("data", "desc").onSnapshot(
+  firebase.firestore().collection('Posts').where("user", "==", codUid).orderBy("data", "desc").get().then(
     (snap) => {
       snap.forEach((doc) => {
-        templatePosts({
-          dataId: doc.id,
-          like: doc.data().likes,
-          name: doc.data().name,
-          post: doc.data().post,
-          time: doc.data().data.toDate().toLocaleString("pt-BR")
-        });
+      document.getElementById("list-post").innerHTML += `<div id=${doc.id} class='post-box'> 
+      ${Icons({ dataId: doc.id, class: 'delete', title: 'X', onClick: deletePost, })}
+      ${PostCard({ dataId: doc.id, name:doc.data().name, post:doc.data().post, time:doc.data().data.toDate().toLocaleString("pt-BR")})} 
+      ${Icons({ dataId: doc.id, class: 'like', title: `👍 ${doc.data().likes}`, onClick: likePost, })}
+      ${Icons({ dataId: doc.id, class: 'edit', title: `📝`, onClick: editPost, })}
+      ${Icons({ dataId: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
+    </div> `
+      document.getElementById(doc.id).querySelector('.primary-icon-save').style.display = 'none';
       });
     }
   );
-}
-
-function templatePosts(props) {
-  const timeline = document.getElementById("list-post");
-  timeline.innerHTML += `<div id=${props.dataId} class='post-box'> 
-    ${Icons({ dataId: props.dataId, class: 'delete', title: 'X', onClick: deletePost, })}
-    ${PostCard(props)} 
-    ${Icons({ dataId: props.dataId, class: 'like', title: `👍 ${props.like}`, onClick: likePost, })}
-    ${Icons({ dataId: props.dataId, class: 'edit', title: `📝`, onClick: editPost, })}
-    ${Icons({ dataId: props.dataId, class: 'save', title: `💾`, onClick: savePost, })}
-    </div> `
-  document.getElementById(props.dataId).querySelector('.primary-icon-save').style.display = 'none';
 }
 
 function SharePost() {
@@ -147,6 +135,7 @@ function logOut() {
 };
 
 window.post = {
+  loadPost,
   deletePost,
   editPost,
   savePost,

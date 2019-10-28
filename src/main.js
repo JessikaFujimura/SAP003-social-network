@@ -10,6 +10,9 @@ function routesPage() {
   const main = document.querySelector('main')
   firebase.auth().onAuthStateChanged(function (user) {
     switch (location.hash) {
+      case "#post":
+          user ? main.innerHTML = Post() : window.location = "#login";
+          break;
       case "#register":
         user ? window.location = "#post" : main.innerHTML = Register();
         break;
@@ -21,9 +24,6 @@ function routesPage() {
         break;
       case "#profile":
         user ? main.innerHTML = Profile() : window.location = "#login";
-        break;
-      case "#post":
-        user ? main.innerHTML = Post() : window.location = "#login";
         break;
       default:
         window.location = "#login";
