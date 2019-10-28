@@ -83,13 +83,13 @@ function createCount() {
       let errorCode = error.code;
       let errorMessage = error.message;
       if (errorCode == 'auth/email-already-in-use') {
-        document.querySelector('.alertMessage').textContent ='E-mail já cadastrado.';
+        document.querySelector('.alert-message').textContent ='E-mail já cadastrado.';
       } if (errorCode == 'auth/weak-password') {
-        document.querySelector('.alertMessage').textContent = 'A senha é muito fraca.';
+        document.querySelector('.alert-message').textContent = 'A senha é muito fraca.';
       } if (errorCode == 'auth/invalid-email') {
-        document.querySelector('.alertMessage').textContent ='E-mail inválido.';
+        document.querySelector('.alert-message').textContent ='E-mail inválido.';
       } else {
-        document.querySelector('.alertMessage').textContent = errorMessage;
+        document.querySelector('.alert-message').textContent = errorMessage;
       }
     });
 }

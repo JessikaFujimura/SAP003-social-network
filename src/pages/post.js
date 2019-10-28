@@ -44,9 +44,9 @@ function Post() {
       <ul id="list-post"></ul>
     </div>
   </section>
-  `;
-  loadPost();
+  `; 
   location.hash = 'post';
+  loadPost();
   return template;
 }
 
@@ -75,8 +75,7 @@ function templatePosts(props) {
     ${PostCard(props)} 
     ${Icons({ dataId: props.dataId, class: 'like', title: `👍 ${props.like}`, onClick: likePost, })}
     ${Icons({ dataId: props.dataId, class: 'edit', title: `📝`, onClick: editPost, })}
-    ${Icons({
-    dataId: props.dataId, class: 'save', title: `💾`, onClick: savePost, })}
+    ${Icons({ dataId: props.dataId, class: 'save', title: `💾`, onClick: savePost, })}
     </div> `
   document.getElementById(props.dataId).querySelector('.primary-icon-save').style.display = 'none';
 }
@@ -135,7 +134,7 @@ function savePost(event) {
   firebase.firestore().collection('Posts').doc(idPost).update(
     { post: newtext,
       time,
-    })
+    }).then(() => location.reload())
   document.getElementById(idPost).querySelector('.primary-icon-save').style.display = 'none';
 }
 
