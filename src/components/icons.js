@@ -15,4 +15,6 @@ function Icons(props) {
       callback(event);
     },
   };
+
+  window.Icons= Icons;
   export default Icons;

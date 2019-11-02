@@ -101,16 +101,6 @@ function Post() {
   return template;
 }
 
-/* document.getElementById("list-post").innerHTML += `<div id=${doc.id} class='post-box'> 
-${Icons({ dataId: doc.id, class: 'delete', title: 'X', onClick: deletePost, })}
-${PostCard({ dataId: doc.id, name: doc.data().name, post: doc.data().post, time: doc.data().data.toDate().toLocaleString("pt-BR")})} 
-${Icons({ dataId: doc.id, class: 'like', title: `👍 ${doc.data().likes}`, onClick: likePost, })}
-${Icons({ dataId: doc.id, class: 'edit', title: `📝`, onClick: editPost, })}
-${Icons({
-dataId: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
-</div> ` */
-
-
 function SharePost() {
   const postText = document.querySelector('.post-textarea').value;
   const time = firebase.firestore.FieldValue.serverTimestamp();
@@ -123,9 +113,9 @@ function SharePost() {
     post: postText,
     comments: []
   }).then((docRef) => {
-    const time = firebase.firestore.FieldValue.serverTimestamp().toDate
     document.querySelector('#list-post').insertAdjacentHTML('afterbegin',
-    '<div id='+docRef.id+' class=post-box> '+window.PostCard({dataId:docRef.id, name:name, post:postText, time:time})+'</div>');
+    '<div id='+docRef.id+' class=post-box>'+window.Icons({ dataId: docRef.id, class: 'delete', title: 'X', onClick: window.post.deletePost})+''+window.PostCard({dataId:docRef.id, name:name, post:postText})+''+window.Icons({ dataId: docRef.id, class: 'like', title: `👍 0`, onClick: window.post.likePost, })+' '+window.Icons({ dataId: docRef.id, class: 'edit', title: `📝`, onClick: window.post.editPost, })+' '+window.Icons({dataId: docRef.id, class: 'save', title: `💾`, onClick: window.post.savePost, })+'</div>');
+    document.getElementById(docRef.id).querySelector('.primary-icon-save').style.display = 'none';
 })
   document.querySelector('.post-textarea').value = '';
 }
@@ -155,7 +145,9 @@ function editPost(event) {
   const idPost = event.target.dataset.id;
   const select = document.querySelector(`li[data-id= '${idPost}']`).getElementsByClassName('card-post')[0];
   select.setAttribute('contentEditable', 'true')
+  select.focus();
   document.getElementById(idPost).querySelector('.primary-icon-save').style.display = 'inline';
+
 }
 
 function savePost(event) {
