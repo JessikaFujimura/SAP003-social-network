@@ -4,9 +4,59 @@ import PostCard from '../components/postcard.js';
 import Icons from '../components/icons.js';
 import Menu from '../components/menu.js';
 
+function loadPost() {
+  const email = firebase.auth().currentUser.email;
+  const codUid = firebase.auth().getUid(email);
+  firebase.firestore().collection('Posts').where("user", "==", codUid).orderBy("data", "desc").get().then(
+    (snap) => {
+      snap.forEach((doc) => {
+      document.getElementById("list-post").innerHTML += `<div id=${doc.id} class='post-box'> 
+        ${Icons({ 
+          dataId: doc.id, 
+          class: 'delete', 
+          title: 'X', 
+          onClick: deletePost, 
+        })}
+        ${PostCard({ 
+          dataId: doc.id, 
+          name: doc.data().name, 
+          post: doc.data().post, 
+          time: doc.data().data.toDate().toLocaleString("pt-BR"),
+        })} 
+        ${Icons({ 
+          dataId: doc.id, 
+          class: 'like', 
+          title: `👍 ${doc.data().likes}`, 
+          onClick: likePost, 
+        })}
+        ${Icons({ 
+          dataId: doc.id,
+          class: 'edit', 
+          title: `📝`, 
+          onClick: editPost, 
+        })}
+        ${Icons({
+        dataId: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
+        </div> `
+      document.getElementById(doc.id).querySelector('.primary-icon-save').style.display = 'none';
+      });
+    }
+  );
+}
+
 function Post() {
+  const nameUser = function() {
+    firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
+    .then(function (doc) { document.querySelector('.name-user').textContent = doc.data().name })
+  }
+  const ocupationUser = () => {
+    firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
+    .then(function (doc) { document.querySelector('.job-user').textContent = doc.data().job })
+  }
   const template = `
-  <header class="header-post"><img class="img-post" src="./Imagens/header-logo.png" class="img-post"></header>
+  <header class="header-post">
+    <img class="img-post" src="./Imagens/header-logo.png" class="img-post">
+  </header>
   <input type="checkbox" id="btn-menu"/>
   <label for="btn-menu">&#9776;</label>
   <nav class="menu">
@@ -25,14 +75,14 @@ function Post() {
     <div class="user">
       <img class = "avatar" src="./Imagens/avatar.png">
       <div class="user-info">
-        <p class = "name-user">${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.name-user').textContent = doc.data().name })}</p>
-        <p class='job-user'>${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.job-user').textContent = doc.data().job })}</p>
+        <p class = "name-user"></p>
+        <p class='job-user'></p>
       </div>
     </div>
     <div class="box-post">
       <form class="forms-post">
         ${TextArea({
-        class: 'post',
+        class:'post',
         placeholder: 'O que quer compartilhar?',
       })}
         ${Button({
@@ -45,59 +95,39 @@ function Post() {
     </div>
   </section>
   `;
+  nameUser();
+  ocupationUser();
   loadPost();
-  location.hash = 'post';
   return template;
 }
 
-function loadPost() {
-  const email = firebase.auth().currentUser.email;
-  const codUid = firebase.auth().getUid(email);
-  firebase.firestore().collection('Posts').where("user", "==", codUid).orderBy("data", "desc").onSnapshot(
-    (snap) => {
-      snap.forEach((doc) => {
-        templatePosts({
-          dataId: doc.id,
-          like: doc.data().likes,
-          name: doc.data().name,
-          post: doc.data().post,
-          time: doc.data().data.toDate().toLocaleString("pt-BR")
-        });
-      });
-    }
-  );
-}
+/* document.getElementById("list-post").innerHTML += `<div id=${doc.id} class='post-box'> 
+${Icons({ dataId: doc.id, class: 'delete', title: 'X', onClick: deletePost, })}
+${PostCard({ dataId: doc.id, name: doc.data().name, post: doc.data().post, time: doc.data().data.toDate().toLocaleString("pt-BR")})} 
+${Icons({ dataId: doc.id, class: 'like', title: `👍 ${doc.data().likes}`, onClick: likePost, })}
+${Icons({ dataId: doc.id, class: 'edit', title: `📝`, onClick: editPost, })}
+${Icons({
+dataId: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
+</div> ` */
 
-function templatePosts(props) {
-  const timeline = document.getElementById("list-post");
-  timeline.innerHTML += `<div id=${props.dataId} class='post-box'> 
-    ${Icons({ dataId: props.dataId, class: 'delete', title: 'X', onClick: deletePost, })}
-    ${PostCard(props)} 
-    ${Icons({ dataId: props.dataId, class: 'like', title: `👍 ${props.like}`, onClick: likePost, })}
-    ${Icons({ dataId: props.dataId, class: 'edit', title: `📝`, onClick: editPost, })}
-    ${Icons({
-    dataId: props.dataId, class: 'save', title: `💾`, onClick: savePost, })}
-    </div> `
-  document.getElementById(props.dataId).querySelector('.primary-icon-save').style.display = 'none';
-}
 
 function SharePost() {
   const postText = document.querySelector('.post-textarea').value;
-  const email = firebase.auth().currentUser.email
-  const codUid = firebase.auth().getUid(email);
   const time = firebase.firestore.FieldValue.serverTimestamp();
   const name = firebase.auth().currentUser.displayName;
   firebase.firestore().collection('Posts').add({
     name: name,
-    user: codUid,
+    user: id,
     data: time,
     likes: 0,
     post: postText,
     comments: []
-  }).then(function () {
-    location.reload()
-  })
-  document.querySelector('.js-post').value = '';
+  }).then((docRef) => {
+    const time = firebase.firestore.FieldValue.serverTimestamp().toDate
+    document.querySelector('#list-post').insertAdjacentHTML('afterbegin',
+    '<div id='+docRef.id+' class=post-box> '+window.PostCard({dataId:docRef.id, name:name, post:postText, time:time})+'</div>');
+})
+  document.querySelector('.post-textarea').value = '';
 }
 
 function deletePost(event) {
@@ -150,9 +180,13 @@ function logOut() {
 };
 
 window.post = {
+  loadPost,
   deletePost,
+  likePost,
   editPost,
   savePost,
+  logOut,
+  pageProfile,
 }
 
 export default Post;

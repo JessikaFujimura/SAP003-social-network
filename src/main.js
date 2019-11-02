@@ -12,7 +12,7 @@ function routesPage() {
         user ? window.location = "#post" : main.innerHTML = Register();
         break;
       case "#login":
-        user ? window.location.hash = "#post": main.innerHTML = Login();
+        user ? window.location = "#post" : main.innerHTML = Login();
         break;
       case "#forgot_password":
         user ? window.location = "#post" : main.innerHTML = ForgotPassword();
@@ -30,4 +30,4 @@ function routesPage() {
 }
 
 window.addEventListener('hashchange', routesPage, false);
-window.addEventListener('load', routesPage);
+window.addEventListener('load', routesPage, false);

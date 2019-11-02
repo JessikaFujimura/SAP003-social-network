@@ -8,4 +8,5 @@ function PostCard(props) {
     `;
     return template;
 }
+window.PostCard= PostCard;
 export default PostCard;

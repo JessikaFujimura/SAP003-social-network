@@ -39,13 +39,13 @@ function Profile() {
         <label>Ocupação: </label/>
         ${Input({
           class: 'perfil-job',
-          value:`${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.perfil-job').value = doc.data().job })}`,
+          value:`${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get().then(function (doc) { document.querySelector('.perfil-job').value = doc.data().job })}`,
           type: 'text',
         })}
         <label>Data de nascimento: </label/> 
         ${Input({
           class: 'perfil-born',
-          value:`${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.perfil-born').value = doc.data().dateBorn })}`,
+          value:`${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get().then(function (doc) { document.querySelector('.perfil-born').value = doc.data().dateBorn })}`,
           type: 'text',
         })}
         <div class="group-button">
@@ -78,6 +78,9 @@ function logOut() {
 
 function deleteCount() {
   firebase.auth().currentUser.delete();
+  firebase.auth().signOut();
+  const codUid = firebase.auth().currentUser.uid;
+  firebase.firestore().collection('users').doc(codUid).delete();
 }
 
 function saveData() {
@@ -85,7 +88,7 @@ function saveData() {
   const email = document.querySelector('.email-perfil').value;
   const job = document.querySelector('.perfil-job').value;
   const dateBorn = document.querySelector('.perfil-born').value;
-  firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).update(
+  firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).update(
     {job, dateBorn}
   );
   firebase.auth().currentUser.updateProfile({

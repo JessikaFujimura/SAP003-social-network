@@ -61,7 +61,7 @@ function loginEmail() {
       location.hash = 'post'
     })
     .catch(function (error) {
-      let errorCode = error.code;
+      const errorCode = error.code;
       if (errorCode === 'auth/wrong-password') {
         document.querySelector('.alert-message').textContent = 'Senha errada!.';
       } if (errorCode === 'auth/user-not-found') {
@@ -73,14 +73,9 @@ function loginEmail() {
 }
 
 function loginGoogle() {
-  let provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithRedirect(provider);
-  firebase.auth().getRedirectResult().then(function (result) {
-    if (result.credential) {
-      let token = result.credential.accessToken;
-    }
-    let user = result.user;
-  })
+  firebase.auth().getRedirectResult()
 }
 
 function forgetPassword() {
