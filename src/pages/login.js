@@ -25,17 +25,20 @@ function Login() {
         })}
         ${Button({
         id: 'btnLogin',
+        class:'',
         title: 'Login',
         onClick: loginEmail,
         })}
         <p class="text-simple">Ou entre com:</p>
         ${Button({
         id: "btnGoogle",
+        class:'',
         title: '<i class="fab fa-google"></i>',
         onClick: loginGoogle,
         })}
         ${Button({
         id: 'btnForget',
+        class:'',
         title: 'Esqueci a senha',
         onClick: forgetPassword,
         })}
@@ -44,6 +47,7 @@ function Login() {
     <p class="text-simple">Não tem uma conta?</p>
     ${Button({
     id: 'btnregister',
+    class:'',
     title: 'Registre-se',
     onClick: HashRegister
     })}

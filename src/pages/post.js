@@ -1,48 +1,7 @@
 import TextArea from '../components/textarea.js';
 import Button from '../components/button.js';
 import PostCard from '../components/postcard.js';
-import Icons from '../components/icons.js';
 import Menu from '../components/menu.js';
-
-function loadPost() {
-  const email = firebase.auth().currentUser.email;
-  const codUid = firebase.auth().getUid(email);
-  firebase.firestore().collection('Posts').where("user", "==", codUid).orderBy("data", "desc").get().then(
-    (snap) => {
-      snap.forEach((doc) => {
-      document.getElementById("list-post").innerHTML += `<div id=${doc.id} class='post-box'> 
-        ${Icons({ 
-          dataId: doc.id, 
-          class: 'delete', 
-          title: 'X', 
-          onClick: deletePost, 
-        })}
-        ${PostCard({ 
-          dataId: doc.id, 
-          name: doc.data().name, 
-          post: doc.data().post, 
-          time: doc.data().data.toDate().toLocaleString("pt-BR"),
-        })} 
-        ${Icons({ 
-          dataId: doc.id, 
-          class: 'like', 
-          title: `👍 ${doc.data().likes}`, 
-          onClick: likePost, 
-        })}
-        ${Icons({ 
-          dataId: doc.id,
-          class: 'edit', 
-          title: `📝`, 
-          onClick: editPost, 
-        })}
-        ${Icons({
-        dataId: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
-        </div> `
-      document.getElementById(doc.id).querySelector('.primary-icon-save').style.display = 'none';
-      });
-    }
-  );
-}
 
 function Post() {
   const nameUser = function() {
@@ -87,6 +46,7 @@ function Post() {
       })}
         ${Button({
         id: 'btnshare',
+        class:'',
         title: 'Compartilhar',
         onClick: SharePost,
       })}
@@ -97,25 +57,94 @@ function Post() {
   `;
   nameUser();
   ocupationUser();
-  loadPost();
+  setTimeout(loadPost(),3000);
   return template;
+}
+
+
+function loadPost() {
+  const codUid = firebase.auth().currentUser.uid;
+  firebase.firestore().collection('Posts').where('user', '==', codUid).orderBy('data', 'desc').get().then(
+    (snap) => {
+      snap.forEach((doc) => {
+      document.getElementById('list-post').innerHTML += `<div id=${doc.id} class='post-box'> 
+        ${Button({ 
+          id: doc.id, 
+          class: 'delete', 
+          title: 'X', 
+          onClick: deletePost, 
+        })}
+        ${PostCard({ 
+          id: doc.id, 
+          name: doc.data().name, 
+          post: doc.data().post, 
+          time: doc.data().data.toDate().toLocaleString("pt-BR"),
+        })} 
+        ${Button({ 
+          id: doc.id, 
+          class: 'like', 
+          title: `👍 ${doc.data().likes}`, 
+          onClick: likePost, 
+        })}
+        ${Button({ 
+          id: doc.id,
+          class: 'edit', 
+          title: `📝`, 
+          onClick: editPost, 
+        })}
+        ${Button({
+        id: doc.id, class: 'save', title: `💾`, onClick: savePost, })}
+        </div> `
+      document.getElementById(doc.id).querySelector('.save-button').style.display = 'none';
+      });
+    }
+  );
 }
 
 function SharePost() {
   const postText = document.querySelector('.post-textarea').value;
   const time = firebase.firestore.FieldValue.serverTimestamp();
   const name = firebase.auth().currentUser.displayName;
+  const codUid = firebase.auth().currentUser.uid;
   firebase.firestore().collection('Posts').add({
     name: name,
-    user: id,
+    user: codUid,
     data: time,
     likes: 0,
     post: postText,
     comments: []
   }).then((docRef) => {
     document.querySelector('#list-post').insertAdjacentHTML('afterbegin',
-    '<div id='+docRef.id+' class=post-box>'+window.Icons({ dataId: docRef.id, class: 'delete', title: 'X', onClick: window.post.deletePost})+''+window.PostCard({dataId:docRef.id, name:name, post:postText})+''+window.Icons({ dataId: docRef.id, class: 'like', title: `👍 0`, onClick: window.post.likePost, })+' '+window.Icons({ dataId: docRef.id, class: 'edit', title: `📝`, onClick: window.post.editPost, })+' '+window.Icons({dataId: docRef.id, class: 'save', title: `💾`, onClick: window.post.savePost, })+'</div>');
-    document.getElementById(docRef.id).querySelector('.primary-icon-save').style.display = 'none';
+    '<div id='+docRef.id+' class=post-box>'
+    +window.Button({ 
+      id: docRef.id, 
+      class: 'delete', 
+      title: 'X', 
+      onClick: window.post.deletePost})
+    +''
+    +window.PostCard({
+      id:docRef.id, 
+      name:name, 
+      post:postText})
+    +''
+    +window.Button({
+      id: docRef.id, 
+      class: 'like', 
+      title: `👍 0`, 
+      onClick: window.post.likePost, })
+    +' '
+    +window.Button({ 
+      id: docRef.id, 
+      class: 'edit', 
+      title: `📝`, 
+      onClick: window.post.editPost, })
+      +' '
+      +window.Button({
+        id: docRef.id, 
+        class: 'save', 
+        title: `💾`, 
+        onClick: window.post.savePost, })+'</div>');
+    document.getElementById(docRef.id).querySelector('.save-button').style.display = 'none';
 })
   document.querySelector('.post-textarea').value = '';
 }
@@ -132,11 +161,10 @@ function likePost(event) {
   firebase.firestore().collection('Posts').doc(idPost).get().then(function (doc) {
     let numLikes = doc.data().likes;
     numLikes++
+    document.querySelectorAll(`button[data-id='${idPost}']`)[1].textContent = '👍 ' + numLikes;
     firebase.firestore().collection('Posts').doc(idPost).update({
       likes: numLikes,
       time,
-    }).then(() => {
-      location.reload()
     })
   })
 }
@@ -146,7 +174,7 @@ function editPost(event) {
   const select = document.querySelector(`li[data-id= '${idPost}']`).getElementsByClassName('card-post')[0];
   select.setAttribute('contentEditable', 'true')
   select.focus();
-  document.getElementById(idPost).querySelector('.primary-icon-save').style.display = 'inline';
+  document.getElementById(idPost).querySelector('.save-button').style.display = 'inline';
 
 }
 
@@ -157,10 +185,8 @@ function savePost(event) {
   firebase.firestore().collection('Posts').doc(idPost).update(
     { post: newtext,
       time,
-    }).then(() => {
-      location.reload()
     })
-  document.getElementById(idPost).querySelector('.primary-icon-save').style.display = 'none';
+  document.getElementById(idPost).querySelector('.save-button').style.display = 'none';
 }
 
 function pageProfile() {
@@ -172,7 +198,6 @@ function logOut() {
 };
 
 window.post = {
-  loadPost,
   deletePost,
   likePost,
   editPost,

@@ -51,11 +51,13 @@ function Profile() {
         <div class="group-button">
         ${Button({
           id: 'saveData',
+          class:'',
           title: 'Salvar dados',
           onClick: saveData,
         })}
         ${Button({
           id: 'deleteCount',
+          class:'',
           title: 'Deletar conta',
           onClick: deleteCount,
         })}

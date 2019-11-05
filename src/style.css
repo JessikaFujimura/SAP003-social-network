@@ -15,7 +15,7 @@
   padding: 5%;
   margin: 0;
 }
-.button {
+.-button {
   background-color: #FFC44F;
   padding: 2%;
   margin: 1%;
@@ -25,7 +25,7 @@
   border: none;
   cursor: pointer;
 }
-.button:hover {
+.-button:hover {
   color: #E85531;
 }
 #btn-menu:checked ~ .menu{
@@ -33,16 +33,16 @@
   margin-left: 5%;
   display: block;
 }
-#btnGoogle.button{
+button[data-id="btnGoogle"] {
   background-color: #DB4437;
   border-radius: 50%;
   height: auto;
 }
-#btnregister.button{
+button[data-id="btnregister"] {
   display: block;
   margin: 0 auto 10%;
 }
-#btnForget.button{
+button[data-id="btnForget"] {
   background-color: transparent;
   font-weight: normal;
   text-decoration: underline;
@@ -70,13 +70,11 @@
   background-color:#E85531;
   padding: 0 2%;
 }
-
 .card-post {
   display: inline-block;
   word-wrap: break-word;
   padding: 2%;
 }
-
 .card-time {
   font-size: 70%;
   border: none;
@@ -153,33 +151,27 @@ label{
   margin: 0;
   padding: 0;
 }
-
 .logo{
   height: 120px;
   display: flex;
   margin: auto;
 }
-
 .menu {
   margin-left: -100%;
   width: 100%;
   transition: all .3s;
   position: absolute;
-
 }
-
 .menu ul {
   list-style: none;
   position: relative;
   display: inline-block;
 }
-
 .menu ul li {
   width: 100%;
   float: none;
   background-color: #FFC44F;
 }
-
 .menu a {
   padding: 15px;
   display: flex;
@@ -187,7 +179,6 @@ label{
   text-align: center;
   font-size: 15px;
 }
-
 .menu ul li:hover a {
   background-color: #FF1C14;
   color: black;
@@ -198,7 +189,6 @@ label{
   align-self: center;
   padding-top: 2%;
 }
-
 .name-network {
   color: #FF1C14;
   font-size: 350%;
@@ -208,7 +198,6 @@ label{
   padding: 4%;
   text-shadow: #df7f1d 2px 2px 2px;
 }
-
 .primary-box {
   display: flex;
   flex-direction: column;
@@ -230,7 +219,7 @@ label{
   border: 1px solid #FFC44F;
   border-radius: 1%;
 }
-.primary-icon-delete {
+.delete-button {
   position: absolute;
   right: 11%;
   margin: 2% 0;
@@ -239,22 +228,21 @@ label{
   font-weight: 900;
   color: red;
 }
-.primary-icon-like {
+.like-button {
   position: absolute;
   right: 10%;
   align-self: flex-end;
   width: 12%;
   height: 4%;
 }
-
-.primary-icon-edit {
+.edit-button {
   position: absolute;
   left: 10%;
   align-self: flex-end;
   width: 7%;
   height: 4%;
 }
-.primary-icon-save {
+.save-button {
   position: absolute;
   left: 21%;
   align-self: flex-end;
@@ -367,24 +355,24 @@ label{
     width: 85%;
     border-width: medium;
   }
-  .primary-icon-delete {
+  .delete-button {
     right: 5%;
     margin-top: 1%;
     width: 3%;
     height: auto;
   }
-  .primary-icon-edit {
+  .edit-button {
     width: 3%;
     height: auto;
     left: 45%;
   }
-  .primary-icon-like {
+  .like-button {
     right: 5%;
     width: 5%;
     height: auto;
     margin-bottom: auto;
   }
-  .primary-icon-save {
+  .save-button {
     left: 49%;
     height: 5%;
     width: 3%;
@@ -420,5 +408,4 @@ label{
   .template-post {
     display: flex;
   }
-
 }

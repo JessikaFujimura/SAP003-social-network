@@ -47,6 +47,7 @@ function Register() {
       <p class="alert-message"></p>
           ${Button({
         id: 'btncreate-count',
+        class:'',
         title: 'Criar Conta',
         onClick: createCount,
       })}

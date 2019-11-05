@@ -1,9 +1,9 @@
 function Button(props) {
   const template = `
     <button
-      class="button"
+      class="${props.class}-button"
       type="submit"
-      id=${props.id}
+      data-id=${props.id}
       onclick="button.handleClick(event, ${props.onClick})" >
       ${props.title}
     </button>
@@ -16,4 +16,5 @@ window.button = {
     callback(event);
   },
 };
+window.Button = Button;
 export default Button;

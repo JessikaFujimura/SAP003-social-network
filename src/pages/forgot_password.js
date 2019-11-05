@@ -18,6 +18,7 @@ function ForgotPassword() {
         })}
         ${Button({
         id: 'btnResetpassword',
+        class:'',
         title: 'Enviar email para redefinir senha',
         onClick: resetPassword,
         })}
