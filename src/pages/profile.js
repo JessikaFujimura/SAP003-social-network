@@ -1,11 +1,12 @@
 import Button from '../components/button.js';
 import Input from '../components/input.js';
 import Menu from '../components/menu.js';
+import Header from '../components/header.js';
 
 function Profile() {
   const template = `
   <div class="template">
-    ${Header({class:'header'})}
+    ${Header({ class: 'header' })}
     <input type="checkbox" id="btn-menu"/>
     <label for="btn-menu">&#9776;</label>
     <nav class="menu" id="post">
@@ -39,13 +40,15 @@ function Profile() {
         <label>Ocupação: </label/>
         ${Input({
     class: 'perfil-job',
-    value: `${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.perfil-job').value = doc.data().job })}`,
+    value: `${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get()
+      .then((doc) => { document.querySelector('.perfil-job').value = doc.data().job; })}`,
     type: 'text',
   })}
         <label>Data de nascimento: </label/> 
         ${Input({
     class: 'perfil-born',
-    value: `${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get().then(function (doc) { document.querySelector('.perfil-born').value = doc.data().dateBorn })}`,
+    value: `${firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).get()
+      .then((doc) => { document.querySelector('.perfil-born').value = doc.data().dateBorn; })}`,
     type: 'text',
   })}
         <div class="group-button">
@@ -64,7 +67,7 @@ function Profile() {
   </section>
 </div>
   `;
-  location.hash = 'profile'
+  location.hash = 'profile';
   return template;
 }
 
@@ -86,7 +89,7 @@ function saveData() {
   const job = document.querySelector('.perfil-job').value;
   const dateBorn = document.querySelector('.perfil-born').value;
   firebase.firestore().collection('users').doc(firebase.auth().getUid(firebase.auth().currentUser.email)).update(
-    { job, dateBorn }
+    { job, dateBorn },
   );
   firebase.auth().currentUser.updateProfile({
     displayName: name,

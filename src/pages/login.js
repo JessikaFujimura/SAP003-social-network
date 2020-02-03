@@ -12,44 +12,44 @@ function Login() {
       <form class="forms">
         <label>E-mail:</label>
         ${Input({
-          class: 'email-input',
-          placeholder: 'exemplo@seudomínio.com',
-          value: '',
-          type: 'email',
-        })}
+    class: 'email-input',
+    placeholder: 'exemplo@seudomínio.com',
+    value: '',
+    type: 'email',
+  })}
         <label>Senha:</label>
         ${Input({
-          class: 'password-input ',
-          placeholder: '********',
-          value: '',
-          type: 'password',
-        })}
+    class: 'password-input ',
+    placeholder: '********',
+    value: '',
+    type: 'password',
+  })}
         <p class="alert-message"></p>
         ${Button({
-          id: 'btnLogin',
-          title: 'Login',
-          onClick: loginEmail,
-        })}
+    id: 'btnLogin',
+    title: 'Login',
+    onClick: loginEmail,
+  })}
         <p class="text-simple">Ou entre com:</p>
         ${Button({
-          id: "btnGoogle",
-          title: '<i class="fab fa-google"></i>',
-          onClick: loginGoogle,
-        })}
+    id: 'btnGoogle',
+    title: '<i class="fab fa-google"></i>',
+    onClick: loginGoogle,
+  })}
         ${Button({
-          id: 'btnForget',
-          title: 'Esqueci a senha',
-          onClick: forgetPassword,
-        })}
+    id: 'btnForget',
+    title: 'Esqueci a senha',
+    onClick: forgetPassword,
+  })}
       </form>
       <p class="text-simple">
         Não tem uma conta?
       </p>
       ${Button({
-        id: 'btnregister',
-        title: 'Registre-se',
-        onClick: HashRegister
-      })}
+    id: 'btnregister',
+    title: 'Registre-se',
+    onClick: HashRegister,
+  })}
     </section>
   </div>
   `;
@@ -61,10 +61,10 @@ function loginEmail() {
   const password = document.querySelector('.password-input').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(() => {
-      window.location.hash = 'post'
+      window.location.hash = 'post';
     })
-    .catch(function (error) {
-      let errorCode = error.code;
+    .catch((error) => {
+      const errorCode = error.code;
       if (errorCode === 'auth/wrong-password') {
         document.querySelector('.alert-message').textContent = 'Senha errada!.';
       } if (errorCode === 'auth/user-not-found') {
@@ -72,18 +72,18 @@ function loginEmail() {
       } else {
         document.querySelector('.alert-message').textContent = 'Usuário não cadastrado.';
       }
-    })
+    });
 }
 
 function loginGoogle() {
-  let provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithRedirect(provider);
-  firebase.auth().getRedirectResult().then(function (result) {
+  firebase.auth().getRedirectResult().then((result) => {
     if (result.credential) {
-      let token = result.credential.accessToken;
+      const token = result.credential.accessToken;
     }
-    let user = result.user;
-  })
+    const user = result.user;
+  });
 }
 
 function forgetPassword() {

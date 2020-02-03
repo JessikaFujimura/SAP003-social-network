@@ -4,7 +4,7 @@ import Input from '../components/input.js';
 function Register() {
   const template = `
   <div class="template">
-    ${Header({class:'header'})}
+    ${Header({ class: 'header' })}
     <section class = "register-section">
       <h1 class="name-network">Heroínas</h1>
       <h3 class="text-simple">Para fazer seu cadastro na rede Heroínas preencha os campos abaixo!</h3>
@@ -54,7 +54,7 @@ function Register() {
   </section>
 </div>
   `;
-  location.hash = 'register'
+  location.hash = 'register';
   return template;
 }
 
@@ -69,17 +69,17 @@ function createCount() {
       firebase.auth().currentUser.updateProfile({
         displayName: name,
       });
-      firebase.auth().currentUser.sendEmailVerification()
+      firebase.auth().currentUser.sendEmailVerification();
       const codUid = firebase.auth().currentUser.uid;
-      
+
       firebase.firestore().collection('users').doc(codUid).set({
         name,
         dateBorn: born,
         job,
-      })
+      });
       window.location.hash = 'login';
     })
-    .catch(function (error) {
+    .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       if (errorCode == 'auth/email-already-in-use') {

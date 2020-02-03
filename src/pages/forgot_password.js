@@ -26,15 +26,15 @@ function ForgotPassword() {
     </section>
   </div>
   `;
-  location.hash = 'forgot_password'
+  window.location.hash = 'forgot_password';
   return template;
 }
 
 function resetPassword() {
   const emailAddress = document.querySelector('.email-input').value;
-  firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
+  firebase.auth().sendPasswordResetEmail(emailAddress).then(() => {
     document.querySelector('.alertMessage').textContent = 'Email enviado <br> Verifique sua caixa de email';
-  })
+  });
 }
 
 export default ForgotPassword;
