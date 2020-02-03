@@ -157,6 +157,7 @@ function editPost(event) {
   const idPost = event.target.dataset.id;
   const select = document.querySelector(`li[data-id= '${idPost}']`).getElementsByClassName('card-post')[0];
   select.setAttribute('contentEditable', 'true')
+  select.focus()
   document.getElementById(idPost).querySelector('.primary-icon-save').style.display = 'inline';
 }
 
