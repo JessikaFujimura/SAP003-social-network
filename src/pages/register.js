@@ -4,7 +4,7 @@ import Input from '../components/input.js';
 function Register() {
   const template = `
   <div class="template">
-    <header class="header"><img class="logo" src="./Imagens/header-logo.png"></header>
+    ${Header({class:'header'})}
     <section class = "register-section">
       <h1 class="name-network">Heroínas</h1>
       <h3 class="text-simple">Para fazer seu cadastro na rede Heroínas preencha os campos abaixo!</h3>

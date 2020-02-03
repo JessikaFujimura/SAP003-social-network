@@ -1,53 +1,56 @@
 import Button from '../components/button.js';
 import Input from '../components/input.js';
+import Header from '../components/header.js';
 
 function Login() {
   const template = `
   <div class="template">
-    <header class="header"><img class="logo" src="./Imagens/header-logo.png"></header>
+    ${Header({ class: 'header' })}
     <section class ="login-section">
       <h1 class="name-network">Heroínas</h1>
       <h3 class="text-simple">Bem vinda, programadora!</h3>
       <form class="forms">
         <label>E-mail:</label>
         ${Input({
-    class: 'email-input',
-    placeholder: 'exemplo@seudomínio.com',
-    value: '',
-    type: 'email',
-  })}
+          class: 'email-input',
+          placeholder: 'exemplo@seudomínio.com',
+          value: '',
+          type: 'email',
+        })}
         <label>Senha:</label>
         ${Input({
-    class: 'password-input ',
-    placeholder: '********',
-    value: '',
-    type: 'password',
-  })}
+          class: 'password-input ',
+          placeholder: '********',
+          value: '',
+          type: 'password',
+        })}
+        <p class="alert-message"></p>
         ${Button({
-    id: 'btnLogin',
-    title: 'Login',
-    onClick: loginEmail,
-  })}
+          id: 'btnLogin',
+          title: 'Login',
+          onClick: loginEmail,
+        })}
         <p class="text-simple">Ou entre com:</p>
         ${Button({
-    id: "btnGoogle",
-    title: '<i class="fab fa-google"></i>',
-    onClick: loginGoogle,
-  })}
+          id: "btnGoogle",
+          title: '<i class="fab fa-google"></i>',
+          onClick: loginGoogle,
+        })}
         ${Button({
-    id: 'btnForget',
-    title: 'Esqueci a senha',
-    onClick: forgetPassword,
-  })}
+          id: 'btnForget',
+          title: 'Esqueci a senha',
+          onClick: forgetPassword,
+        })}
       </form>
-    <p class="alert-message"></p>
-    <p class="text-simple">Não tem uma conta?</p>
-    ${Button({
-    id: 'btnregister',
-    title: 'Registre-se',
-    onClick: HashRegister
-  })}
-  </section>
+      <p class="text-simple">
+        Não tem uma conta?
+      </p>
+      ${Button({
+        id: 'btnregister',
+        title: 'Registre-se',
+        onClick: HashRegister
+      })}
+    </section>
   </div>
   `;
   return template;
@@ -58,7 +61,7 @@ function loginEmail() {
   const password = document.querySelector('.password-input').value;
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(() => {
-      location.hash = 'post'
+      window.location.hash = 'post'
     })
     .catch(function (error) {
       let errorCode = error.code;

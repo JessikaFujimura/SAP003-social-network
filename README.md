@@ -1,7 +1,7 @@
 # Rede Social Heroínas
 
 ## Índice
-- [Rede Social Heroínas](#rede-social-heroínas)
+  - [Rede Social Heroínas](#rede-social-heroínas)
   - [Índice](#Índice)
   - [1. Resumo do Projeto.](#1-resumo-do-projeto)
   - [2. Características-Técnicas.](#2-características-técnicas)

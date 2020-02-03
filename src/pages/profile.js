@@ -5,7 +5,7 @@ import Menu from '../components/menu.js';
 function Profile() {
   const template = `
   <div class="template">
-    <header class="header"><img class="logo" src="./Imagens/header-logo.png">
+    ${Header({class:'header'})}
     <input type="checkbox" id="btn-menu"/>
     <label for="btn-menu">&#9776;</label>
     <nav class="menu" id="post">
