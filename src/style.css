@@ -20,7 +20,7 @@
 .button {
   box-sizing: border-box;
   background-color: #FFC44F;
-  padding: 2%;
+  padding: 2% 6%;
   margin: 1%;
   font-size: 1rem;
   border-radius: 5px;
@@ -43,19 +43,15 @@
   background-color: #DB4437;
   border-radius: 50%;
   height: auto;
+  padding: 2%;
 }
 
-#btnregister.button {
-  display: block;
-  margin: 0 auto 0;
-}
-
-#btnForget.button {
-  background-color: transparent;
+.link {
+  text-decoration: none;
   font-weight: normal;
-  text-decoration: underline;
   font-size: 1rem;
   cursor: pointer;
+  text-align: center;
 }
 
 #btn-menu {
@@ -137,9 +133,11 @@
 
 .input {
   width: auto;
+  height: 5vh;
   border-radius: 15px;
-  padding: 5px;
-  margin: 0 0 5%;
+  padding: 3px;
+  margin: 0 0 3%;
+  border: 1px solid rgb(167, 163, 163);
 }
 
 .job-user {
@@ -175,6 +173,12 @@ label {
 
 .logo {
   height: 120px;
+  display: flex;
+  margin: auto;
+}
+
+.logo-post{
+  height: 18vh;
   display: flex;
   margin: auto;
 }
@@ -224,7 +228,7 @@ label {
   font-family: 'Amaranth', sans-serif;
   margin: auto;
   text-align: center;
-  padding: 2% 0 0;
+  padding: 3% 0 0;
   text-shadow: #df7f1d 2px 2px 2px;
 }
 
@@ -300,6 +304,7 @@ label {
 
 .text-simple {
   text-align: center;
+  font-size: 1.1rem;
   padding: 1%;
 }
 
@@ -359,6 +364,10 @@ label {
     border-radius: 10px;
   }
 
+  .forgot-password-section {
+    flex: 1 1 100%;
+  }
+
   .header {
     flex: 1 1 100%;
     display: flex;
@@ -368,6 +377,7 @@ label {
   .header-post {
     display: flex;
     background-image: radial-gradient(#ffbb36 5%, #E85531);
+    height: 20vh;
   }
 
   .input {
@@ -381,7 +391,7 @@ label {
     width: 75%;
   }
 
-  .logo {
+  .logo{
     height: auto;
   }
 
@@ -395,8 +405,37 @@ label {
     padding: 1%;
   }
 
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;  
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); 
+}
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    display: flex;
+    box-sizing: border-box;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 5%;
+    border: 1px solid #888;
+    border-radius: 15px;
+    width: 50vw;
+    height: 80vh;
+    flex-direction: column;
+}
+
   .name-network {
     font-size: 4rem;
+    margin: 0;
   }
 
   .name-user {
@@ -450,7 +489,8 @@ label {
 
   .register-section {
     flex: 1 1 100%;
-    padding: 2% 0 2%;
+    height: 100vh;
+    box-sizing: border-box;
   }
 
   #saveData {
