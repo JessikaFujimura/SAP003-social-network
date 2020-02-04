@@ -3,7 +3,6 @@ import Input from '../components/input.js';
 import Menu from '../components/menu.js';
 import Header from '../components/header.js';
 
-
 function pageFeed() {
   window.location.hash = 'post';
 }
@@ -12,20 +11,21 @@ function logOut() {
   firebase.auth().signOut();
 }
 
-
 function deleteCount() {
   document.querySelector('#myModal').classList.add('show');
-  document.querySelector('.modal-content').innerHTML = `<div>
-  <span>Deletar conta</span>
+  document.querySelector('.modal-content').innerHTML = `
+  <span>Quer mesmo deletar a conta?</span>
+  <p class='buttonModal'>
   <button onclick=document.getElementById('myModal').classList.remove('show')>
-    X
+    Cancelar
   </button>
   <button 
   onclick=firebase.auth().currentUser.delete()
   .then(document.getElementById('myModal').classList.remove('show'))>
     Deletar conta
   </button>
-  </div>`;
+  </p>
+  `;
 }
 
 function saveData() {
@@ -41,6 +41,8 @@ function saveData() {
     email,
   });
 }
+
+
 function Profile() {
   const template = `
     <div class="template">
@@ -65,25 +67,29 @@ function Profile() {
           <label>Nome: </label/>
           ${Input({
     class: 'perfil',
+    placeholder: 'Mulher Maravilha',
     value: `${firebase.auth().currentUser.displayName}`,
     type: 'text',
   })}
           <label>Email: </label/>
           ${Input({
     class: 'perfil',
+    placeholder: 'exemplo@exe.com',
     value: `${firebase.auth().currentUser.email}`,
     type: 'text',
   })}
           <label>Ocupação: </label/>
           ${Input({
     class: 'perfil-job',
+    placeholder: 'Desenvolvedora',
     value: `${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
-      .then((doc) => { document.querySelector('.perfil-job').value = doc.data().job; })}`,
+      .then((doc) => { document.querySelector('.perfil-job').textContent = doc.data().job; })}`,
     type: 'text',
   })}
           <label>Data de nascimento: </label/> 
           ${Input({
     class: 'perfil-born',
+    placeholder: '1991-07-25',
     value: `${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
       .then((doc) => { document.querySelector('.perfil-born').value = doc.data().dateBorn; })}`,
     type: 'text',
@@ -103,8 +109,8 @@ function Profile() {
       </form>
     </section>
     <div id="myModal" class="modal">
-      <div class="modal-content">
-      </div>
+      <section class="modal-content">
+      </section>
     </div>
   </div>
     `;

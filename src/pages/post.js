@@ -130,10 +130,15 @@ function SharePost() {
   );
 }
 
-
 function logOut() {
   firebase.auth().signOut();
 }
+
+const getJob = async () => {
+  const job = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
+    .then((doc) => { document.querySelector('.job-user').textContent = doc.data().job; });
+  return job;
+};
 
 function Post() {
   const template = `
@@ -160,12 +165,7 @@ function Post() {
           ${firebase.auth().currentUser.displayName}
         </p>
         <p class='job-user'>
-        ${firebase.firestore().collection('users').doc(
-    firebase.auth().currentUser.uid,
-  ).get()
-    .then((doc) => {
-      document.querySelector('.job-user').textContent = doc.data().job;
-    })}
+        ${getJob()}
         </p>
       </div>
     </div>
