@@ -19,7 +19,7 @@ function routesPage() {
         user ? window.location = '#post' : main.innerHTML = ForgotPassword();
         break;
       case '#profile':
-        user ? main.innerHTML = Profile() : window.location = '#login';
+        user ? Profile() : window.location = '#login';
         break;
       case '#post':
         user ? main.innerHTML = Post() : window.location = '#login';

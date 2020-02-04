@@ -71,11 +71,8 @@
 }
 
 .card-name {
-  font-size: 90%;
+  font-size: 1rem;
   font-weight: bolder;
-  border: none;
-  background-color: #E85531;
-  padding: 0 2%;
 }
 
 .card-post {
@@ -234,14 +231,19 @@ label {
 .buttonModal button{
   box-sizing: border-box;
   background-color: #FFC44F;
-  padding: 2% 6%;
-  margin: 1%;
+  padding: 6% 6%;
+  margin: 0 3%;
   font-size: 1rem;
   border-radius: 5px;
   font-weight: bold;
   border: none;
   cursor: pointer;
 }
+
+.buttonModal {
+  padding: 5% 0;
+}
+
 .modal-content {
   display: flex;
   box-sizing: border-box;
@@ -249,12 +251,12 @@ label {
   margin: auto;
   padding: 3%;
   border-radius: 15px;
-  width: 30vw;
+  width: 80vw;
   height: 20vh;
   text-align: center;
+  justify-content: center;
   flex-direction: column;
 }
-
 
 .name-user {
   font-weight: 600;
@@ -289,7 +291,6 @@ label {
 
 .post-box {
   display: flex;
-  justify-content: center;
   margin: 5% 0;
 }
 
@@ -299,8 +300,8 @@ label {
 }
 
 .primary-icon-delete {
-  position: absolute;
-  right: 11%;
+  position: relative;
+  left: 80%;
   margin: 2% 0;
   width: 7%;
   height: 4%;
@@ -404,9 +405,16 @@ label {
     border: 1px solid lightgrey;
     border-radius: 10px;
   }
-
+  
   .forgot-password-section {
     flex: 1 1 100%;
+  }
+  
+  .group-button {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
   }
 
   .header {
@@ -446,7 +454,10 @@ label {
     padding: 1%;
   }
 
-
+  .modal-content {
+    width: 30vw;
+    height: 30vh;
+  }
   .name-network {
     font-size: 4rem;
     margin: 0;
@@ -456,13 +467,6 @@ label {
     display: flex;
     align-self: baseline;
     margin-left: 5%;
-  }
-
-  .group-button {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    width: 50%;
   }
 
   .profile-section {

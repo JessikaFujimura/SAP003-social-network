@@ -3,11 +3,11 @@ import Input from '../components/input.js';
 import Header from '../components/header.js';
 
 function createCount() {
-  const email = document.querySelector('.email-input').value;
-  const password = document.querySelector('.password-input').value;
-  const name = document.querySelector('.name-input').value;
-  const born = document.querySelector('.birth-date-input').value;
-  const job = document.querySelector('.job-input').value;
+  const email = document.querySelector('#email-register').value;
+  const password = document.querySelector('#password-register').value;
+  const name = document.querySelector('#name-register').value;
+  const born = document.querySelector('#birth-date-register').value;
+  const job = document.querySelector('#job-register').value;
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(() => {
       firebase.auth().currentUser.updateProfile({
@@ -50,35 +50,35 @@ function Register() {
       <form class="forms">
         <label>Nome Completo :</label>      
         ${Input({
-    class: 'name-input',
+    id: 'name-register',
     placeholder: 'Mulher Maravilha',
     value: '',
     type: 'text',
   })}
         <label>Data de nascimento :</label> 
         ${Input({
-    class: 'birth-date-input',
+    id: 'birth-date-register',
     placeholder: '',
     value: '',
     type: 'date',
   })}
         <label> Ocupação:</label> 
         ${Input({
-    class: 'job-input',
+    id: 'job-register',
     placeholder: 'Desenvolvedora front-end na Heroínas',
     value: '',
     type: 'text',
   })}
         <label> Email:</label> 
         ${Input({
-    class: 'email-input',
+    id: 'email-register',
     placeholder: 'exemplo@seudomínio.com',
     value: '',
     type: 'text',
   })}
       <label> Senha:</label> 
           ${Input({
-    class: 'password-input ',
+    id: 'password-register ',
     placeholder: '********',
     value: '',
     type: 'password',

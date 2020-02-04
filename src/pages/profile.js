@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import Button from '../components/button.js';
 import Input from '../components/input.js';
 import Menu from '../components/menu.js';
@@ -29,10 +30,10 @@ function deleteCount() {
 }
 
 function saveData() {
-  const name = document.querySelector('.name-perfil').value;
-  const email = document.querySelector('.email-perfil').value;
-  const job = document.querySelector('.perfil-job').value;
-  const dateBorn = document.querySelector('.perfil-born').value;
+  const name = document.querySelector('#name-profile').value;
+  const email = document.querySelector('#email-profile').value;
+  const job = document.querySelector('#job-profile').value;
+  const dateBorn = document.querySelector('#born-profile').value;
   firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).update(
     { job, dateBorn },
   );
@@ -42,9 +43,22 @@ function saveData() {
   });
 }
 
+async function getJob() {
+  const job = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
+    .then(doc => doc.data().job);
+  const born = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
+    .then(doc => doc.data().dateBorn);
+  return { job, born };
+}
 
 function Profile() {
-  const template = `
+  getJob().then(({ job, born }) => {
+    const main = document.querySelector('main');
+    return main.innerHTML = template(job, born);
+  });
+}
+
+const template = (job, born) => `
     <div class="template">
       ${Header({ class: 'header', classImg: 'logo' })}
       <input type="checkbox" id="btn-menu"/>
@@ -66,32 +80,30 @@ function Profile() {
         <form class="forms">
           <label>Nome: </label/>
           ${Input({
-    class: 'perfil',
+    id: 'name-profile',
     placeholder: 'Mulher Maravilha',
     value: `${firebase.auth().currentUser.displayName}`,
     type: 'text',
   })}
           <label>Email: </label/>
           ${Input({
-    class: 'perfil',
+    id: 'email-profile',
     placeholder: 'exemplo@exe.com',
     value: `${firebase.auth().currentUser.email}`,
     type: 'text',
   })}
           <label>Ocupação: </label/>
           ${Input({
-    class: 'perfil-job',
+    id: 'job-profile',
     placeholder: 'Desenvolvedora',
-    value: `${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
-      .then((doc) => { document.querySelector('.perfil-job').textContent = doc.data().job; })}`,
+    value: job,
     type: 'text',
   })}
           <label>Data de nascimento: </label/> 
           ${Input({
-    class: 'perfil-born',
+    id: 'born-profile',
     placeholder: '1991-07-25',
-    value: `${firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
-      .then((doc) => { document.querySelector('.perfil-born').value = doc.data().dateBorn; })}`,
+    value: born,
     type: 'text',
   })}
           <div class="group-button">
@@ -113,9 +125,6 @@ function Profile() {
       </section>
     </div>
   </div>
-    `;
-  window.location.hash = 'profile';
-  return template;
-}
+  `;
 
 export default Profile;
