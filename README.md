@@ -3,9 +3,8 @@
 ## Índice
   - [1. Resumo do Projeto.](#1-resumo-do-projeto)
   - [2. Como funciona?](#2-como-funciona)
-  - [3. Histórias de Usuários Implementadas](#3-histórias-de-usuário-implementadas)
-  - [4. Tempo do Projeto](#4-tempo-do-projeto)
-  - [5. Template das Telas](#5-template-das-telas)
+  - [3. Ferramentas utilizadas](#3-ferramentas-utilizadas)
+  - [4. Histórias de Usuários Implementadas](#3-histórias-de-usuário-implementadas)
 
 
 ## 1. Resumo do Projeto
