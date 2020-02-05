@@ -22,7 +22,7 @@ function routesPage() {
         user ? Profile() : window.location = '#login';
         break;
       case '#post':
-        user ? main.innerHTML = Post() : window.location = '#login';
+        user ? Post() : window.location = '#login';
         break;
       default:
         window.location = '#login';

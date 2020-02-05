@@ -21,8 +21,8 @@ function deleteCount() {
     Cancelar
   </button>
   <button 
-  onclick=firebase.auth().currentUser.delete()
-  .then(document.getElementById('myModal').classList.remove('show'))>
+  onclick=firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).delete().then(firebase.auth().currentUser.delete())
+  >
     Deletar conta
   </button>
   </p>
@@ -43,19 +43,12 @@ function saveData() {
   });
 }
 
-async function getJob() {
+async function dataFirebase() {
   const job = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
     .then(doc => doc.data().job);
   const born = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
     .then(doc => doc.data().dateBorn);
   return { job, born };
-}
-
-function Profile() {
-  getJob().then(({ job, born }) => {
-    const main = document.querySelector('main');
-    return main.innerHTML = template(job, born);
-  });
 }
 
 const template = (job, born) => `
@@ -126,5 +119,12 @@ const template = (job, born) => `
     </div>
   </div>
   `;
+
+function Profile() {
+  dataFirebase().then(({ job, born }) => {
+    const main = document.querySelector('main');
+    return main.innerHTML = template(job, born);
+  });
+}
 
 export default Profile;

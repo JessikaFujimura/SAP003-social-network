@@ -15,7 +15,6 @@ function createCount() {
       });
       firebase.auth().currentUser.sendEmailVerification();
       const codUid = firebase.auth().currentUser.uid;
-
       firebase.firestore().collection('users').doc(codUid).set({
         name,
         dateBorn: born,

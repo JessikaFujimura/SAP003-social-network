@@ -1,10 +1,8 @@
 # Rede Social Heroínas
 
 ## Índice
-  - [Rede Social Heroínas](#rede-social-heroínas)
-  - [Índice](#Índice)
   - [1. Resumo do Projeto.](#1-resumo-do-projeto)
-  - [2. Características-Técnicas.](#2-características-técnicas)
+  - [2. Como funciona?](#2-como-funciona)
   - [3. Histórias de Usuários Implementadas](#3-histórias-de-usuário-implementadas)
   - [4. Tempo do Projeto](#4-tempo-do-projeto)
   - [5. Template das Telas](#5-template-das-telas)
@@ -12,48 +10,29 @@
 
 ## 1. Resumo do Projeto
 
-Neste projeto, criamos a Rede Social **Heroínas**, que é voltada para programadoras que desejem se conectar com outras programadoras. O tema escolhido foi "Feminismo". 
+A Rede Social **Heroínas** é uma aplicação voltada para programadoras que desejem se conectar com outras. 
 
-A nossa personagem principal é a Mulher Maravilha - que, agora, decidiu se desafiar e começar uma nova profissão - assim como nós, alunas da Laboratória! 
+Com enfoque no empoderamento feminino, a personagem principal da rede é a Mulher Maravilha - que, agora, decidiu se desafiar e começar uma nova profissão - assim como as alunas da Laboratória! 
 
-## 2. Características Técnicas
+Quanto as **caraterísticas técnicas** foram aplicação envolveram:
 
-As **caraterísticas técnicas** da aplicação envolveram:
-- Uma *Single-Page Application*;
-- CSS: Desenho com enfoque no mobile first;
-- Permite a persistência, edição, atualização e exclusão de dados;
+O desenvolvimento desta aplicação teve enfoque em *Single-Page Application* (SPA), Mobile First e Componentização.
 
-### Desenvolvimento FrontEnd
 
-#### Tecnologias 
+O projeto foi elaborado em 3 (três) semanas.
 
-##### HTML5 
-* HTML5 semântico.
+## 2. Como funciona? 
 
-##### CSS3
-* Implementação de seletores de classe.
-* Utilizamos `flexbox` para alcançar o desenho `mobile first`, implementando um layout que se adapte a **mobile e desktop**,conforme modelo proposto.
-* Não utilizamos frameworks de CSS (bootstrap), nem estilização com `float`.
+![Telas](src/Imagens/video.gif)
 
-##### JavaScript (ES6+)
-
-* Utilizamos módulos do JavaScript ES6 na elaboração do código.
-* Uso de Template strings.
-* Implementamos um sistema de rotas (sem uso de bibliotecas externas) para trocar de uma tela para outra de maneira dinâmica (SPA).
-
-### Persistência de dados
-
-Neste projeto, utilizamos o `Firestore` do `Firebase` para estruturação dos dados, para que estes possam ser consultados, atualizados, modificados e eliminados segundo os requerimentos do usuário.
-
-#### Ferramentas utilizadas
+## 3. Ferramentas utilizadas
 1. HTML 5
 2. CSS
 3. *Vanilla* JS
-4. Git e GitHub
-5. Visual Code Studio
-6. Firebase *auth*, *firestore* e *hosting*
+4. Firebase *auth*, *firestore* e *hosting*
+5. Eslint
 
-## 3. Histórias de Usuário Implementadas
+## 4. Histórias de Usuário Implementadas
  
 * Como usuário novo, devo poder criar uma conta com email e senha válidos para poder iniciar uma sessão e ingressar na Rede Social.
 
@@ -68,29 +47,3 @@ Neste projeto, utilizamos o `Firestore` do `Firebase` para estruturação dos da
 * Eu como usuário logado, posso escrever, salvar, editar ou deletar um comentário em minhas publicações.
 
 * Ao final devo poder ingressar na Rede Social e poder visualizar os dados de meu perfil criado e editá-los.
-
-## 4. Tempo do Projeto
- 
-O projeto foi elaborado em 3 (três) semanas.
-
-## 5. Template das Telas
- 
-**Tela do Login:**
-
-![Login](src/Imagens/login.png)
-![Login](src/Imagens/login-cel.png)
-
-**Tela de Registro:**
-
-![Registro](src/Imagens/registro.png)
-![Registro](src/Imagens/registro-cel.png)
-
-**Tela do Feed:**
-
-![Feed](src/Imagens/feed.png)
-![Feed](src/Imagens/feed-cel.png)
-
-**Tela do Perfil:**
-
-![Perfil](src/Imagens/perfil.png)
-![Perfil](src/Imagens/perfil-cel.png)

@@ -132,14 +132,22 @@ function logOut() {
   firebase.auth().signOut();
 }
 
-const getJob = async () => {
+const dataFirebase = async () => {
   const job = await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get()
-    .then((doc) => { document.querySelector('.job-user').textContent = doc.data().job; });
-  return job;
+    .then(doc => doc.data().job);
+  const name = await firebase.auth().currentUser.displayName;
+  return { job, name };
 };
 
 function Post() {
-  const template = `
+  dataFirebase().then(({ job, name }) => {
+    const main = document.querySelector('main');
+    loadPost();
+    return main.innerHTML = template(job, name);
+  });
+}
+
+const template = (job, name) => `
   ${Header({ class: 'header-post', classImg: 'logo-post' })}
   <input type="checkbox" id="btn-menu"/>
   <label for="btn-menu">&#9776;</label>
@@ -160,10 +168,10 @@ function Post() {
       <img class = "avatar" src="./Imagens/avatar.png">
       <div class="user-info">
         <p class = "name-user">
-          ${firebase.auth().currentUser.displayName}
+          ${name}
         </p>
         <p class='job-user'>
-        ${getJob()}
+        ${job}
         </p>
       </div>
     </div>
@@ -183,9 +191,7 @@ function Post() {
     </div>
   </section>
   `;
-  loadPost();
-  return template;
-}
+
 
 window.post = {
   deletePost,

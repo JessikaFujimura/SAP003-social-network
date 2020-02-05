@@ -33,7 +33,12 @@
   color: #E85531;
 }
 
-
+.menu {
+  margin-left: -100%;
+  width: 100%;
+  transition: all .3s;
+  position: absolute;
+}
 
 #btn-menu:checked~.menu {
   margin-top: -5%;
@@ -184,12 +189,6 @@ label {
   margin: auto;
 }
 
-.menu {
-  margin-left: -100%;
-  width: 100%;
-  transition: all .3s;
-  position: absolute;
-}
 
 .menu ul {
   list-style: none;
@@ -440,13 +439,7 @@ label {
 
   .input {
     margin: 0 0 2.8%;
-  }
-
-  .job-user {
-    margin: 0 20% 0 5%;
-    height: auto;
-    align-items: baseline;
-    width: 75%;
+    width: 20vw;
   }
 
   .logo{
